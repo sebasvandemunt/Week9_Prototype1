@@ -27,6 +27,9 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
+
+    this.load.image('map', 'assets/map.png');
+
     //MOVE TO POINTER START
     this.load.image('block', 'assets/buttonRound_beige.png');
     this.load.image('blue', 'assets/Alien3.png');
@@ -71,6 +74,17 @@ function preload ()
 
 function create ()
 {
+    //CAMERA OFFSET1 START
+    this.cameras.main.setBounds(0, 0, 360 * 2, 767 * 2);
+    this.physics.world.setBounds(0, 0, 360 * 2, 767 * 2);
+
+    this.add.image(0, 0, 'map').setOrigin(0);
+        this.add.image(360, 0, 'map').setOrigin(0).setFlipX(false);
+        this.add.image(0, 767, 'map').setOrigin(0).setFlipY(false);
+        this.add.image(360, 767, 'map').setOrigin(0).setFlipX(false).setFlipY(false);
+    //CAMERA OFFSET1 END
+
+
         //SPRITESHEET ANIMATION START
         this.anims.create({
             key: 'walk',
@@ -143,7 +157,7 @@ function create ()
     {
         cursor2.setVisible(false).setPosition(this.input.pointer2.x, this.input.pointer2.y);
 
-        this.physics.moveToObject(blue, cursor2, 80);
+        this.physics.moveToObject(blue, cursor2, 300);
 
         Phaser.Utils.Array.Each(
             blocks.getChildren(),
@@ -174,33 +188,80 @@ function create ()
 
     //MOVE AND STOP START
     // source = this.physics.add.image(100, 300, 'cursor');
-    source = this.physics.add.sprite(200, 600, 'walk0').setScale(0.8)
+    this.player = source = this.physics.add.sprite(200, 400, 'walk0').setScale(0.6)
         .play('walk');
+
 
     debug = this.add.graphics();
 
-    this.input.on('pointermove', function () {
+    this.cursors = this.input.on('pointermove', function () {
 
         target.x = this.input.pointer1.x;
         target.y = this.input.pointer1.y;
+        // target = this.input.pointer1;
         
         // Move at 200 px/s:
-        this.physics.moveToObject(source, target, 200);
+        this.physics.moveToObject(source, target, 250);
 
         debug.clear().lineStyle(1, 0x00ff00).setVisible(false);
         debug.lineBetween(0, target.y, 800, target.y);
         debug.lineBetween(target.x, 0, target.x, 600);
 
-
     }, this);
+
+    this.player.setCollideWorldBounds(true);
+
+    this.cameras.main.startFollow(this.input.pointer1, this.player);
+
+    this.cameras.main.followOffset.set(-767, 360);
 
     distanceText = this.add.text(0, 0, '', { fill: '#00ff00' }).setVisible(false);
     //MOVE AND STOP END
+
+
+    //CAMERA OFFSET2 START
+    // this.cursors = this.input.keyboard.createCursorKeys();
+
+    // this.player = this.physics.add.image(400, 300, 'cursor');
+
+    // this.player.setCollideWorldBounds(true);
+
+    // this.cameras.main.startFollow(this.player);
+
+    // this.cameras.main.followOffset.set(-300, 0);
+    //CAMERA OFFSET2 END
 
 }
 
 function update (time, delta)
 {
+
+    //CAMERA OFFSET START
+    this.player.setVelocity(0);
+
+        if (this.input.pointer1.x)
+        {
+            this.player.setVelocityX(-0);
+            this.player.setFlipX(false);
+            this.cameras.main.followOffset.x = 0;
+        }
+        else if (this.input.pointer1.x)
+        {
+            this.player.setVelocityX(100);
+            this.player.setFlipX(true);
+            this.cameras.main.followOffset.x = -0;
+        }
+
+        if (this.input.pointer1.y)
+        {
+            this.player.setVelocityY(-0);
+        }
+        
+        else if (this.input.pointer1.y)
+        {
+            this.player.setVelocityY(500);
+        }
+    //CAMERA OFFSET END
     
         //TWO TOUCH INPUTS START
     if (this.input.pointer1.isDown || this.input.pointer2.isDown)
