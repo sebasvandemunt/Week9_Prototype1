@@ -5,6 +5,11 @@ var config = {
         default: 'arcade',
         // arcade: { debug: true }
     },
+    scale: {
+        parent: 'phaser-example',
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+    },
     width: 360,
     height: 767,
     scene: {
@@ -30,6 +35,9 @@ function preload ()
 
     this.load.image('map', 'assets/map.png');
 
+    this.iter = 3.14;
+
+
     //MOVE TO POINTER START
     this.load.image('block', 'assets/buttonRound_beige.png');
     this.load.image('blue', 'assets/Alien3.png');
@@ -38,6 +46,8 @@ function preload ()
 
     //ROTATE AROUND X Y START
     this.load.image('diamonds', 'assets/buttonRound_beige.png', { frameWidth: 32, frameHeight: 24 });
+    this.load.image('diamonds2', 'assets/buttonRound_beige.png', { frameWidth: 32, frameHeight: 24 });
+
     //ROTATE AROUND X Y END
 
     //KENNEY SPRITESHEET START
@@ -79,9 +89,11 @@ function create ()
     this.physics.world.setBounds(0, 0, 360 * 2, 767 * 2);
 
     this.add.image(0, 0, 'map').setOrigin(0);
-        this.add.image(360, 0, 'map').setOrigin(0).setFlipX(false);
-        this.add.image(0, 767, 'map').setOrigin(0).setFlipY(false);
-        this.add.image(360, 767, 'map').setOrigin(0).setFlipX(false).setFlipY(false);
+        // this.add.image(360, 0, 'map').setOrigin(0).setFlipX(false);
+        // this.add.image(0, 767, 'map').setOrigin(0).setFlipY(false);
+        // this.add.image(360, 767, 'map').setOrigin(0).setFlipX(false).setFlipY(false);
+
+    this.cameras.main.setSize(360 * 1.5, 767 * 1.5);
     //CAMERA OFFSET1 END
 
 
@@ -132,10 +144,10 @@ function create ()
 
 
     //MOVE TO POINTER START
-    var blocks = this.physics.add.group({key: 'block', frameQuantity: 0, setXY: { x: 100, y: 400, stepX: 100 }});
-    var blue = this.physics.add.sprite(200, 300, 'fart0').setScale(0.15).play('spell');
-    var cursor = this.add.image(0, 0, 'cursor').setVisible(false);
-    var cursor2 = this.add.image(0, 0, 'cursor').setVisible(false);
+    // var blocks = this.physics.add.group({key: 'block', frameQuantity: 0, setXY: { x: 100, y: 400, stepX: 100 }});
+    // var blue = this.physics.add.sprite(200, 300, 'fart0').setScale(0.15).play('spell');
+    // var cursor = this.add.image(0, 0, 'cursor').setVisible(false);
+    // var cursor2 = this.add.image(0, 0, 'cursor').setVisible(false);
 
 
     // this.input.on('pointermove', function (pointer)
@@ -153,18 +165,18 @@ function create ()
 
 ////////////////
 
-    this.input.on('pointermove', function (pointer2)
-    {
-        cursor2.setVisible(false).setPosition(this.input.pointer2.x, this.input.pointer2.y);
+    // this.input.on('pointermove', function (pointer2)
+    // {
+    //     cursor2.setVisible(false).setPosition(this.input.pointer2.x, this.input.pointer2.y);
 
-        this.physics.moveToObject(blue, cursor2, 300);
+    //     this.physics.moveToObject(blue, cursor2, 300);
 
-        Phaser.Utils.Array.Each(
-            blocks.getChildren(),
-            this.physics.moveToObject,
-            this.physics,
-            cursor, pointer2, 20);
-    }, this);
+    //     Phaser.Utils.Array.Each(
+    //         blocks.getChildren(),
+    //         this.physics.moveToObject,
+    //         this.physics,
+    //         cursor, pointer2, 20);
+    // }, this);
     //MOVE TO POINTER END
 
 
@@ -181,6 +193,23 @@ function create ()
         this.input.on('pointermove', function () {
             this.geomPoint.setTo(this.input.pointer2.x, this.input.pointer2.y);
         }, this);
+
+
+        ////////
+
+        
+        // this.group = this.add.group();
+
+        // for (var i = 0; i < 256; i++)
+        // {
+        //     this.group.create(Phaser.Math.Between(1, 1), Phaser.Math.Between(1, 1), 'diamonds2', Phaser.Math.Between(10, 10)).setScale(0.5);
+        // }
+
+        // this.geomPoint = new Phaser.Geom.Point(200, 200);
+
+        // this.input.on('pointermove', function () {
+        //     this.geomPoint.setTo(this.input.pointer1.x, this.input.pointer1.y);
+        // }, this);
     //ROTATE AROUND X Y END
 
 
@@ -209,27 +238,19 @@ function create ()
 
     }, this);
 
-    this.player.setCollideWorldBounds(true);
+    // this.player.setCollideWorldBounds(true);
 
-    this.cameras.main.startFollow(this.input.pointer1, this.player);
+    // this.cameras.main.startFollow(this.input.pointer1, this.player, true, 0.05, 0.05);
 
-    this.cameras.main.followOffset.set(-767, 360);
+    // this.cameras.main.followOffset.set(-767, 360);
 
     distanceText = this.add.text(0, 0, '', { fill: '#00ff00' }).setVisible(false);
     //MOVE AND STOP END
 
+    this.cameras.main.startFollow(this.input.pointer2);
 
-    //CAMERA OFFSET2 START
-    // this.cursors = this.input.keyboard.createCursorKeys();
 
-    // this.player = this.physics.add.image(400, 300, 'cursor');
 
-    // this.player.setCollideWorldBounds(true);
-
-    // this.cameras.main.startFollow(this.player);
-
-    // this.cameras.main.followOffset.set(-300, 0);
-    //CAMERA OFFSET2 END
 
 }
 
@@ -237,30 +258,31 @@ function update (time, delta)
 {
 
     //CAMERA OFFSET START
-    this.player.setVelocity(0);
+    // this.player.setVelocity(0);
 
-        if (this.input.pointer1.x)
-        {
-            this.player.setVelocityX(-0);
-            this.player.setFlipX(false);
-            this.cameras.main.followOffset.x = 0;
-        }
-        else if (this.input.pointer1.x)
-        {
-            this.player.setVelocityX(100);
-            this.player.setFlipX(true);
-            this.cameras.main.followOffset.x = -0;
-        }
+    //     if (this.input.pointer1.x)
+    //     {
+    //         this.player.setVelocityX(-0);
+    //         this.player.setFlipX(false);
+    //         this.cameras.main.followOffset.x = 0;
+    //     }
+    //     else if (this.input.pointer1.x)
+    //     {
+    //         this.player.setVelocityX(100);
+    //         this.player.setFlipX(true);
+    //         this.cameras.main.followOffset.x = -0;
+    //     }
 
-        if (this.input.pointer1.y)
-        {
-            this.player.setVelocityY(-0);
-        }
+    //     if (this.input.pointer1.y)
+    //     {
+    //         this.player.setVelocityY(-0);
+    //     }
         
-        else if (this.input.pointer1.y)
-        {
-            this.player.setVelocityY(500);
-        }
+    //     else if (this.input.pointer1.y)
+    //     {
+    //         this.player.setVelocityY(500);
+    //     }
+
     //CAMERA OFFSET END
     
         //TWO TOUCH INPUTS START
@@ -297,9 +319,14 @@ function update (time, delta)
         //  before it is considered as being there. The faster it moves, the more tolerance is required.
         if (distance < 4)
         {
-            source.body.reset(target.x, target.y);
+            source.body.reset(source.x, source.y, target.x, target.y);
         }
     }
     //MOVE AND STOP END
+
+    // this.geomPoint.x = 450 + Math.cos(this.iter) * 200;
+    // this.geomPoint.y = 510 + Math.sin(this.iter) * 200;
+
+    this.iter += 0.02;
 
 }
