@@ -92,7 +92,7 @@ function create ()
         this.add.image(0, 767, 'map').setOrigin(0).setFlipY(false);
         this.add.image(360, 767, 'map').setOrigin(0).setFlipX(false).setFlipY(false);
 
-    this.cameras.main.setSize(360 * 3, 767 * 3);
+    this.cameras.main.setSize(360 * 1, 767 * 1);
     //CAMERA OFFSET1 END
 
 
