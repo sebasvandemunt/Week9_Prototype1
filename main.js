@@ -37,17 +37,24 @@ function preload ()
     this.iter = 3.14;
 
 
+
+
     //MOVE TO POINTER START
     this.load.image('block', 'assets/buttonRound_beige.png');
     this.load.image('blue', 'assets/Alien3.png');
     this.load.image('cursor', 'assets/Alien1.png');
     //MOVE TO POINTER END
 
+
+
+
     //ROTATE AROUND X Y START
     this.load.image('diamonds', 'assets/buttonRound_beige.png', { frameWidth: 32, frameHeight: 24 });
     this.load.image('diamonds2', 'assets/buttonRound_beige.png', { frameWidth: 32, frameHeight: 24 });
-
     //ROTATE AROUND X Y END
+
+
+
 
     //KENNEY SPRITESHEET START
     this.load.image('adventurer', 'assets/kenney_tooncharacters1/Male_adventurer/PNG/Poses_HD/character_maleAdventurer_idle.png', { frameWidth: 192, frameHeight: 256 });
@@ -75,7 +82,6 @@ function preload ()
         this.load.image('fart6', 'fart06.png');
         this.load.image('fart7', 'fart07.png');
         this.load.image('fart8', 'fart08.png');
-
     //KENNEY SPRITESHEET END
 
 }
@@ -94,6 +100,8 @@ function create ()
 
     this.cameras.main.setSize(360 * 4, 767 * 4);
     //CAMERA OFFSET1 END
+
+
 
 
         //SPRITESHEET ANIMATION START
@@ -134,12 +142,15 @@ function create ()
     //SPRITESHEET ANIMATION END
 
 
+
+
     //TWO TOUCH INPUTS START
     graphics = this.add.graphics();
-    //  We need 3 extra pointers, as we only get 1 by default
     this.input.addPointer(3);
     text = this.add.text(10, 10, 'Welcome in my cozy prototype', { font: '16px Courier', fill: '#00ff00' });
     //TWO TOUCH INPUTS END
+
+
 
 
     //MOVE TO POINTER START
@@ -147,22 +158,6 @@ function create ()
     var blue = this.physics.add.sprite(200, 300, 'fart0').setScale(0.15).play('spell');
     var cursor = this.add.image(0, 0, 'cursor').setVisible(false);
     var cursor2 = this.add.image(0, 0, 'cursor').setVisible(false);
-
-
-    // this.input.on('pointermove', function (pointer)
-    // {
-    //     cursor.setVisible(true).setPosition(this.input.pointer1.x, this.input.pointer1.y);
-
-    //     this.physics.moveToObject(blue, pointer, 80);
-
-    //     Phaser.Utils.Array.Each(
-    //         blocks.getChildren(),
-    //         this.physics.moveToObject,
-    //         this.physics,
-    //         cursor, pointer, 100);
-    // }, this);
-
-////////////////
 
     this.input.on('pointermove', function (pointer2)
     {
@@ -179,6 +174,8 @@ function create ()
     //MOVE TO POINTER END
 
 
+
+
     //ROTATE AROUND X Y START
     this.group = this.add.group();
 
@@ -192,30 +189,12 @@ function create ()
         this.input.on('pointermove', function () {
             this.geomPoint.setTo(this.input.pointer2.x, this.input.pointer2.y);
         }, this);
-
-
-        ////////
-
-        
-        // this.group = this.add.group();
-
-        // for (var i = 0; i < 256; i++)
-        // {
-        //     this.group.create(Phaser.Math.Between(1, 1), Phaser.Math.Between(1, 1), 'diamonds2', Phaser.Math.Between(10, 10)).setScale(0.5);
-        // }
-
-        // this.geomPoint = new Phaser.Geom.Point(200, 200);
-
-        // this.input.on('pointermove', function () {
-        //     this.geomPoint.setTo(this.input.pointer1.x, this.input.pointer1.y);
-        // }, this);
     //ROTATE AROUND X Y END
 
 
 
 
     //MOVE AND STOP START
-    // source = this.physics.add.image(100, 300, 'cursor');
     this.player = source = this.physics.add.sprite(200, 400, 'walk0').setScale(0.9)
         .play('walk');
 
@@ -226,9 +205,7 @@ function create ()
 
         target.x = this.input.pointer1.x;
         target.y = this.input.pointer1.y;
-        // target = this.input.pointer1;
         
-        // Move at 200 px/s:
         this.physics.moveToObject(source, target, 500);
 
         debug.clear().lineStyle(1, 0x00ff00).setVisible(false);
@@ -237,15 +214,11 @@ function create ()
 
     }, this);
 
-    // this.player.setCollideWorldBounds(true);
-
-    // this.cameras.main.startFollow(this.input.pointer1, this.player, true, 0.05, 0.05);
-
-    // this.cameras.main.followOffset.set(-767, 360);
-
     distanceText = this.add.text(0, 0, '', { fill: '#00ff00' }).setVisible(false);
     //MOVE AND STOP END
 
+
+    //CAMERA FOLLOW
     this.cameras.main.startFollow(this.player);
 
 
@@ -253,37 +226,11 @@ function create ()
 
 }
 
+
+
 function update (time, delta)
-{
+{  
 
-    //CAMERA OFFSET START
-    // this.player.setVelocity(0);
-
-    //     if (this.input.pointer1.x)
-    //     {
-    //         this.player.setVelocityX(-0);
-    //         this.player.setFlipX(false);
-    //         this.cameras.main.followOffset.x = 0;
-    //     }
-    //     else if (this.input.pointer1.x)
-    //     {
-    //         this.player.setVelocityX(100);
-    //         this.player.setFlipX(true);
-    //         this.cameras.main.followOffset.x = -0;
-    //     }
-
-    //     if (this.input.pointer1.y)
-    //     {
-    //         this.player.setVelocityY(-0);
-    //     }
-        
-    //     else if (this.input.pointer1.y)
-    //     {
-    //         this.player.setVelocityY(500);
-    //     }
-
-    //CAMERA OFFSET END
-    
         //TWO TOUCH INPUTS START
     if (this.input.pointer1.isDown || this.input.pointer2.isDown)
     {
@@ -300,12 +247,17 @@ function update (time, delta)
 
     graphics.fillStyle(0x00ff00, 1);
     graphics.fillRect(this.input.pointer2.x, this.input.pointer2.y, 64, 64).setVisible(false);
-
     //TWO TOUCH INPUTS END
+
+
+
 
     //ROTATE AROUND X Y START
     Phaser.Actions.RotateAroundDistance(this.group.getChildren(), this.geomPoint, 0.055, 75);
     //ROTATE AROUND X Y END
+
+
+
 
     //MOVE AND STOP START
     var distance = Phaser.Math.Distance.Between(source.x, source.y, target.x, target.y);
@@ -316,16 +268,15 @@ function update (time, delta)
 
         //  4 is our distance tolerance, i.e. how close the source can get to the target
         //  before it is considered as being there. The faster it moves, the more tolerance is required.
-        if (distance < 4)
+        if (distance < 3)
         {
             source.body.reset(source.x, source.y, target.x, target.y);
         }
     }
     //MOVE AND STOP END
 
-    // this.geomPoint.x = 450 + Math.cos(this.iter) * 200;
-    // this.geomPoint.y = 510 + Math.sin(this.iter) * 200;
 
+    
     this.iter += 0.02;
 
 }
