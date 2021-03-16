@@ -7,8 +7,7 @@ var config = {
     },
     scale: {
         parent: 'phaser-example',
-        mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH,
+        mode: Phaser.Scale.RESIZE,
     },
     width: 360,
     height: 767,
@@ -85,15 +84,15 @@ function preload ()
 function create ()
 {
     //CAMERA OFFSET1 START
-    this.cameras.main.setBounds(0, 0, 360 * 2, 767 * 2);
-    this.physics.world.setBounds(0, 0, 360 * 2, 767 * 2);
+    this.cameras.main.setBounds(0, 0, 360 * 8, 767 * 8);
+    this.physics.world.setBounds(0, 0, 360 * 8, 767 * 8);
 
     this.add.image(0, 0, 'map').setOrigin(0);
-        // this.add.image(360, 0, 'map').setOrigin(0).setFlipX(false);
-        // this.add.image(0, 767, 'map').setOrigin(0).setFlipY(false);
-        // this.add.image(360, 767, 'map').setOrigin(0).setFlipX(false).setFlipY(false);
+        this.add.image(360, 0, 'map').setOrigin(0).setFlipX(false);
+        this.add.image(0, 767, 'map').setOrigin(0).setFlipY(false);
+        this.add.image(360, 767, 'map').setOrigin(0).setFlipX(false).setFlipY(false);
 
-    this.cameras.main.setSize(360 * 1.5, 767 * 1.5);
+    this.cameras.main.setSize(360 * 3, 767 * 3);
     //CAMERA OFFSET1 END
 
 
@@ -217,7 +216,7 @@ function create ()
 
     //MOVE AND STOP START
     // source = this.physics.add.image(100, 300, 'cursor');
-    this.player = source = this.physics.add.sprite(200, 400, 'walk0').setScale(0.6)
+    this.player = source = this.physics.add.sprite(200, 400, 'walk0').setScale(0.9)
         .play('walk');
 
 
@@ -230,7 +229,7 @@ function create ()
         // target = this.input.pointer1;
         
         // Move at 200 px/s:
-        this.physics.moveToObject(source, target, 250);
+        this.physics.moveToObject(source, target, 350);
 
         debug.clear().lineStyle(1, 0x00ff00).setVisible(false);
         debug.lineBetween(0, target.y, 800, target.y);
