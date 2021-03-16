@@ -143,10 +143,10 @@ function create ()
 
 
     //MOVE TO POINTER START
-    // var blocks = this.physics.add.group({key: 'block', frameQuantity: 0, setXY: { x: 100, y: 400, stepX: 100 }});
-    // var blue = this.physics.add.sprite(200, 300, 'fart0').setScale(0.15).play('spell');
-    // var cursor = this.add.image(0, 0, 'cursor').setVisible(false);
-    // var cursor2 = this.add.image(0, 0, 'cursor').setVisible(false);
+    var blocks = this.physics.add.group({key: 'block', frameQuantity: 0, setXY: { x: 100, y: 400, stepX: 100 }});
+    var blue = this.physics.add.sprite(200, 300, 'fart0').setScale(0.15).play('spell');
+    var cursor = this.add.image(0, 0, 'cursor').setVisible(false);
+    var cursor2 = this.add.image(0, 0, 'cursor').setVisible(false);
 
 
     // this.input.on('pointermove', function (pointer)
@@ -164,18 +164,18 @@ function create ()
 
 ////////////////
 
-    // this.input.on('pointermove', function (pointer2)
-    // {
-    //     cursor2.setVisible(false).setPosition(this.input.pointer2.x, this.input.pointer2.y);
+    this.input.on('pointermove', function (pointer2)
+    {
+        cursor2.setVisible(false).setPosition(this.input.pointer2.x, this.input.pointer2.y);
 
-    //     this.physics.moveToObject(blue, cursor2, 300);
+        this.physics.moveToObject(blue, cursor2, 600);
 
-    //     Phaser.Utils.Array.Each(
-    //         blocks.getChildren(),
-    //         this.physics.moveToObject,
-    //         this.physics,
-    //         cursor, pointer2, 20);
-    // }, this);
+        Phaser.Utils.Array.Each(
+            blocks.getChildren(),
+            this.physics.moveToObject,
+            this.physics,
+            cursor, pointer2, 20);
+    }, this);
     //MOVE TO POINTER END
 
 
@@ -229,7 +229,7 @@ function create ()
         // target = this.input.pointer1;
         
         // Move at 200 px/s:
-        this.physics.moveToObject(source, target, 350);
+        this.physics.moveToObject(source, target, 500);
 
         debug.clear().lineStyle(1, 0x00ff00).setVisible(false);
         debug.lineBetween(0, target.y, 800, target.y);
@@ -246,7 +246,7 @@ function create ()
     distanceText = this.add.text(0, 0, '', { fill: '#00ff00' }).setVisible(false);
     //MOVE AND STOP END
 
-    this.cameras.main.startFollow(this.input.pointer2);
+    this.cameras.main.startFollow(this.player);
 
 
 
