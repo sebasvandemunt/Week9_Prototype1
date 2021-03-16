@@ -177,18 +177,18 @@ function create ()
 
 
     //ROTATE AROUND X Y START
-    this.group = this.add.group();
+    // this.group = this.add.group();
 
-        for (var i = 0; i < 256; i++)
-        {
-            this.group.create(Phaser.Math.Between(1, 1), Phaser.Math.Between(1, 1), 'diamonds', Phaser.Math.Between(10, 10)).setScale(0.5);
-        }
+    //     for (var i = 0; i < 256; i++)
+    //     {
+    //         this.group.create(Phaser.Math.Between(1, 1), Phaser.Math.Between(1, 1), 'diamonds', Phaser.Math.Between(10, 10)).setScale(0.5).setVisible(true);
+    //     }
 
-        this.geomPoint = new Phaser.Geom.Point(200, 200);
+        // this.geomPoint = new Phaser.Geom.Point(200, 200);
 
-        this.input.on('pointermove', function () {
-            this.geomPoint.setTo(this.input.pointer2.x, this.input.pointer2.y);
-        }, this);
+        // this.input.on('pointermove', function () {
+        //     this.geomPoint.setTo(this.input.pointer2.x, this.input.pointer2.y);
+        // }, this);
     //ROTATE AROUND X Y END
 
 
@@ -253,7 +253,7 @@ function update (time, delta)
 
 
     //ROTATE AROUND X Y START
-    Phaser.Actions.RotateAroundDistance(this.group.getChildren(), this.geomPoint, 0.055, 75);
+    // Phaser.Actions.RotateAroundDistance(this.group.getChildren(), this.geomPoint, 0.055, 75);
     //ROTATE AROUND X Y END
 
 
