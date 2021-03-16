@@ -91,7 +91,7 @@ function create ()
 {
     //CAMERA OFFSET1 START
     this.cameras.main.setBounds(0, 0, 360 * 8, 767 * 8);
-    this.physics.world.setBounds(0, 0, 360 * 8, 767 * 8);
+    this.physics.world.setBounds(0, 0, 360 * 1, 767 * 1);
 
     this.add.image(0, 0, 'map').setOrigin(0);
         this.add.image(360, 0, 'map').setOrigin(0).setFlipX(false);
